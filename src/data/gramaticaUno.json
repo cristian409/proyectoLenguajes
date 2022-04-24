@@ -1,0 +1,8 @@
+{
+    "gramatica": {
+        "noTerminal": "A",
+        "producciones": [
+            "B,(C)|A"
+        ]
+    }
+}
