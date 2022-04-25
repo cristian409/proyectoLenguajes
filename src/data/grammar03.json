@@ -1,0 +1,8 @@
+{
+    "grammar": {
+        "noTerminal": "A",
+        "productions": [
+            "ABH|ABD|ACD|ACF|AGC|AGE|CE|CD"
+        ]
+    }
+}

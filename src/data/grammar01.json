@@ -1,0 +1,8 @@
+{
+    "grammar": {
+        "noTerminal": "A",
+        "productions": [
+            "ABH|B,(c)|ABF|AG|AH|ADK|ADL|BJ"
+        ]
+    }
+}
