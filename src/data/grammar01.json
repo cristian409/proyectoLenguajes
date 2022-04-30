@@ -2,7 +2,7 @@
     "grammar": {
         "noTerminal": "A",
         "productions": [
-            "ABH|B,(c)|ABF|AG|AH|ADK|ADL|BJ"
+            "ANBH|B,(c)|ANBF|ANG|ANH|ANDK|ANDL|BJ"
         ]
     }
 }

@@ -5,24 +5,16 @@ const { httpError } = require('../helpers/handleError')
 const getGrammar = (req, res) => {
 
     try {
-        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar03.json'));
+        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar01.json'));
         const grammar = JSON.parse(data).grammar.productions;
-        let factors;
-        let commonFactor;
 
         grammar.forEach(element => {
             productions = element.split('|')
         });
+        console.log(productions)
 
         // factorGrammar
-        factors = factorGrammar(productions)
-        commonFactor = factors[0]
-
-        while (factors[1].localeCompare('') != 0) {
-            factors = factorGrammar(factors[1].split("|"))
-            commonFactor = commonFactor + "|" + factors[0]
-            console.log(factors[0])
-        }
+        factors = factorGrammar("", productions)
 
         // leftRecursion
 
@@ -37,10 +29,10 @@ const getGrammar = (req, res) => {
 
         // Res
         res.send("GRAMMAR: <br/>" + grammar +
-            "<br/> <br/> FactorGrammar: <br/>" + commonFactor + 
-            "<br/> <br/> LeftRecursion: <br/>" + 
-            "<br/> <br/> LL1: <br/>" + 
-            "<br/> <br/> PRIM: <br/>" + 
+            "<br/> <br/> FactorGrammar: <br/>" + factors +
+            "<br/> <br/> LeftRecursion: <br/>" +
+            "<br/> <br/> LL1: <br/>" +
+            "<br/> <br/> PRIM: <br/>" +
             "<br/> <br/> SIG: <br/>")
 
     } catch (e) {
@@ -48,54 +40,95 @@ const getGrammar = (req, res) => {
     }
 }
 
-function factorGrammar(productions) {
+function factorGrammar(alreadyFac, productions) {
 
-    console.log("production " + productions)
-    const firstChar = productions[0][0]
-    const arrayFactor = []
-    arrayFactor.push(productions[0].slice(1))
+
+    const factorArray = []
+    const quotientsArray = []
     let noFactor = ""
-    let commonProduction = false
-    let commonFactor = ""
+    let quotientsExist = false
+    let factor = ""
 
-    for (let i = 1; i < productions.length; i++) {
+    let totalFactor = 0
+    let count = 0
 
-        console.log(productions)
-        let production = productions[i]
-        if (firstChar.localeCompare(production[0]) == 0) {
-            commonProduction = true
-            production = production.slice(1)
-            arrayFactor.push(production)
-        } else {
-            if (noFactor.localeCompare("") == 0) {
-                noFactor = noFactor.concat(production)
+    for (let i = 0; i < productions.length; i++) {
+        factor = productions[0][i]
+        for (let j = 1; j < productions.length; j++) {
+            if (productions[j].length > i) {
+                if (productions[j][i].localeCompare(factor) == 0) {
+                    count = count + 1
+                }
+            }
+        }
+
+        if (productions.length <= 2 && count == 0 && totalFactor == 0) {
+
+            factor = productions[0]
+            if (factorArray.indexOf(factor) === -1) {
+                factorArray.push(factor)
+            }
+            break
+        }
+
+        if (totalFactor == 0 || totalFactor == count) {
+
+            if (count == 0) {
+
+                factor = productions[0]
+                factorArray.push(factor)
+                break
+
             } else {
-                noFactor = noFactor.concat("|" + production)
+
+                if (factorArray.indexOf(factor) === -1) {
+                    factorArray.push(factor)
+
+                    totalFactor = count
+                    count = 0
+                }
             }
         }
     }
 
-    if (commonProduction == true) {
+    factor = factorArray.join('')
+    quotientsArray.push(productions[0].slice(factor.length))
 
-        factors = factorGrammar(arrayFactor)
-        commonFactor = firstChar + "(" + factors[0]
 
-        while (factors[1].localeCompare('') != 0) {
-            console.log("factor1: " + factors[1])
-            factors = factorGrammar(factors[1].split("|"))
-            commonFactor = commonFactor + "|" + factors[0]
-        }
-        return [commonFactor + ")", noFactor]
-    } else {
-        if (noFactor.localeCompare('') != 0) {
-            console.log("production: " + productions[0] + " nofactor: " + noFactor)
-            return [productions[0], noFactor]
+    for (let i = 1; i < productions.length; i++) {
+
+        if (productions[i].startsWith(factor)) {
+
+            quotientsExist = true
+            quotientsArray.push(productions[i].slice(factor.length))
         } else {
-            return [productions[0], '']
+            if (noFactor.localeCompare("") == 0) {
+                noFactor = noFactor.concat(productions[i])
+            } else {
+                noFactor = noFactor.concat("|" + productions[i])
+            }
         }
-        
     }
 
+    if (quotientsExist) {
+        
+        const factorMap = new Map()
+        factorMap.set(factor, quotientsArray)
+        console.log(factorMap)
+        
+        alreadyFac = alreadyFac + factor + "(" + factorGrammar(alreadyFac, quotientsArray) + ")"
+        if (noFactor != "") {
+            alreadyFac = alreadyFac + " | " + factorGrammar("", noFactor.split("|"))
+        }
+        return alreadyFac
+    } else {
+        if (noFactor.localeCompare('') != 0) {
+            alreadyFac = alreadyFac + factor + " | " + factorGrammar(alreadyFac, noFactor.split("|"))
+            return alreadyFac
+        } else {
+            return productions
+        }
+    }
 }
 
 module.exports = { getGrammar }
