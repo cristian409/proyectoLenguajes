@@ -10,6 +10,7 @@ const getGrammar = (req, res) => {
 
         grammar.forEach(element => {
             productions = element.split('|')
+            return productions;
         });
         console.log(productions)
 
@@ -24,6 +25,19 @@ const getGrammar = (req, res) => {
 
 
         // SIG
+        //juanes work creacion de variables constantes
+        const solucionSiguientes="";
+        const primerosSig="";
+        const noTerminalPrimero="";
+
+        // inicio el metodo de obtencion de los siguientes
+       // beginSig:(primerosSig, grammar)=>{
+       //     for(int i=0;j<grammar.size();i++){
+
+       //     }
+       // }
+
+
 
 
 
