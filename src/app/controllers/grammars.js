@@ -5,17 +5,18 @@ const { httpError } = require('../helpers/handleError')
 const getGrammar = (req, res) => {
 
     try {
-        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar01.json'));
+        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar02.json'));
         const grammar = JSON.parse(data).grammar.productions;
+        console.log(grammar)
 
-        grammar.forEach(element => {
+        grammar.production.forEach(element => {
             productions = element.split('|')
         });
-        console.log(productions)
 
         // factorGrammar
-        factors = factorGrammar("", productions)
-
+        const factorMap = new Map()
+        resMap = factorGrammar("", productions, factorMap, grammar.id)
+        
         // leftRecursion
 
 
@@ -26,10 +27,9 @@ const getGrammar = (req, res) => {
         // SIG
 
 
-
         // Res
-        res.send("GRAMMAR: <br/>" + grammar +
-            "<br/> <br/> FactorGrammar: <br/>" + factors +
+        res.send("GRAMMAR: <br/>" + grammar.production +
+            "<br/> <br/> FactorGrammar <br/>" + mapToString(resMap, grammar.id) +
             "<br/> <br/> LeftRecursion: <br/>" +
             "<br/> <br/> LL1: <br/>" +
             "<br/> <br/> PRIM: <br/>" +
@@ -40,8 +40,25 @@ const getGrammar = (req, res) => {
     }
 }
 
-function factorGrammar(alreadyFac, productions) {
+/*Formatea el mapa de las producciones en un string 
+organizandolo alfabeticamente pero iniciando por la produccion inicial*/
+function mapToString(map, initial) {
 
+    let stringMap = ""
+    map = new Map([...map.entries()].sort())
+
+    for (let [key, value] of map.entries()) {
+
+        if (key.localeCompare(initial) != 0) {
+            stringMap = stringMap + key + " -> " + value + "<br/>"
+        } else {
+            stringMap = key + " -> " + value + "<br/>" + stringMap
+        }
+    }
+    return stringMap
+}
+
+function factorGrammar(alreadyFac, productions, factorMap, factorFather) {
 
     const factorArray = []
     const quotientsArray = []
@@ -94,11 +111,9 @@ function factorGrammar(alreadyFac, productions) {
     factor = factorArray.join('')
     quotientsArray.push(productions[0].slice(factor.length))
 
-
     for (let i = 1; i < productions.length; i++) {
 
         if (productions[i].startsWith(factor)) {
-
             quotientsExist = true
             quotientsArray.push(productions[i].slice(factor.length))
         } else {
@@ -111,19 +126,21 @@ function factorGrammar(alreadyFac, productions) {
     }
 
     if (quotientsExist) {
-        
-        const factorMap = new Map()
-        factorMap.set(factor, quotientsArray)
-        console.log(factorMap)
-        
-        alreadyFac = alreadyFac + factor + "(" + factorGrammar(alreadyFac, quotientsArray) + ")"
+
+        factorGrammar(alreadyFac, quotientsArray, factorMap, factor)
+        alreadyFac = alreadyFac + factor + factor + "'"
+        factorMap.set(factorFather, alreadyFac)
         if (noFactor != "") {
-            alreadyFac = alreadyFac + " | " + factorGrammar("", noFactor.split("|"))
+            alreadyFac = alreadyFac + "|" + factorGrammar("", noFactor.split("|"), factorMap, factorFather)
+            factorMap.set(factorFather, alreadyFac)
+            return alreadyFac, factorMap
         }
         return alreadyFac
     } else {
         if (noFactor.localeCompare('') != 0) {
-            alreadyFac = alreadyFac + factor + " | " + factorGrammar(alreadyFac, noFactor.split("|"))
+
+            alreadyFac = factor + "|" + factorGrammar(alreadyFac, noFactor.split("|"), factorMap, factorFather)
+            factorMap.set(factorFather, alreadyFac)
             return alreadyFac
         } else {
             return productions

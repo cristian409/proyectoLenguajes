@@ -1,8 +1,11 @@
 {
     "grammar": {
         "noTerminal": "A",
-        "productions": [
+        "Initial": "Z",
+        "productions":  {
+            "id": "Z",
+            "production": [
             "ABH|B,(c)|ABF|AG|CE|CD"
-        ]
+        ]}
     }
 }

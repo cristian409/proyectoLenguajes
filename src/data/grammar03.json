@@ -1,8 +1,11 @@
 {
     "grammar": {
         "noTerminal": "A",
-        "productions": [
-            "ABH|ABD|ACD|ACF|AGC|AGE|CE|CD"
-        ]
+        "Initial": "I",
+        "productions":  {
+            "id": "I",
+            "production": [
+                "ABH|ABD|ACD|ACF|AGC|AGE|CE|CD"
+        ]}
     }
 }
