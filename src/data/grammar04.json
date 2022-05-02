@@ -1,0 +1,6 @@
+{
+    "gramatica":[
+        {"noTerminal":"CN", "productions":["CNoxFN","FN"]},
+        {"noTerminal":"FN", "productions":["tt"]}
+    ]
+}

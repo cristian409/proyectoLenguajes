@@ -1,26 +1,27 @@
 const fs = require('fs');
 const path = require('path');
+const recursion = require('../controllers/recursion')
 const { httpError } = require('../helpers/handleError')
 
 const getGrammar = (req, res) => {
 
     try {
-        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar02.json'));
-        const grammar = JSON.parse(data).grammar.productions;
+        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar04.json'));
+        const grammar = JSON.parse(data).gramatica;
         console.log(grammar)
 
-        grammar.production.forEach(element => {
-            productions = element.split('|')
-            return productions;
-        });
+        // grammar.production.forEach(element => {
+        //     productions = element.split('|')
+        //     return productions;
+        // });
 
         // factorGrammar
-        const factorMap = new Map()
-        resMap = factorGrammar("", productions, factorMap, grammar.id)
+        // const factorMap = new Map()
+        // resMap = factorGrammar("", productions, factorMap, grammar.id)
         
         // leftRecursion
-
-
+        const r = recursion.recursion(grammar);
+        console.log(r.gramatica);
         // LL1
         // PRIM
 
@@ -42,12 +43,12 @@ const getGrammar = (req, res) => {
 
 
         // Res
-        res.send("GRAMMAR: <br/>" + grammar.production +
-            "<br/> <br/> FactorGrammar <br/>" + mapToString(resMap, grammar.id) +
-            "<br/> <br/> LeftRecursion: <br/>" +
-            "<br/> <br/> LL1: <br/>" +
-            "<br/> <br/> PRIM: <br/>" +
-            "<br/> <br/> SIG: <br/>")
+        // res.send("GRAMMAR: <br/>" + grammar.production +
+        //     "<br/> <br/> FactorGrammar <br/>" + mapToString(resMap, grammar.id) +
+        //     "<br/> <br/> LeftRecursion: <br/>" +
+        //     "<br/> <br/> LL1: <br/>" +
+        //     "<br/> <br/> PRIM: <br/>" +
+        //     "<br/> <br/> SIG: <br/>")
 
     } catch (e) {
         httpError(res, e)

@@ -18,7 +18,7 @@ app.use(require('./app/routes'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect database
-dbConnect()
+// dbConnect()
 // Starting server
 app.listen(app.get('port'), () => {
   console.log(`Server on port ${app.get('port')}`);
