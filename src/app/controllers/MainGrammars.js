@@ -4,6 +4,7 @@ const path = require('path');
 const factorGrammar = require("./FactorGrammar")
 const recursion = require("./recursion")
 const firstGrammar = require("./FirstGrammar")
+const conjunto = require("./conjunto")
 const { httpError } = require('../helpers/handleError')
 
 const getGrammar = (req, res) => {
@@ -61,6 +62,8 @@ const getGrammar = (req, res) => {
 
             //     }
             // }
+            //CONJUNTO PREDICCION
+            const conjuntoPrediccion = conjunto.conjunto(recursionGrammar,resFirstMap);
         }
 
         // Res
