@@ -1,6 +1,6 @@
 
 module.exports = {
-    recursion: (produccionesMap) => {
+    LeftRecursion: (produccionesMap) => {
         const recursionMap = new Map();
         return recursionGrammarFunc(produccionesMap, recursionMap);
     }

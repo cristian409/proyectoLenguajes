@@ -2,9 +2,9 @@ const { response } = require('express');
 const fs = require('fs');
 const path = require('path');
 const factorGrammar = require("./FactorGrammar")
-const recursion = require("./recursion")
+const leftRecursion = require("./LeftRecursion")
 const firstGrammar = require("./FirstGrammar")
-const conjunto = require("./conjunto")
+const productionSet = require("./ProductionSet")
 const { httpError } = require('../helpers/handleError')
 
 const getGrammar = (req, res) => {
@@ -15,6 +15,8 @@ const getGrammar = (req, res) => {
         let resGrammar = ""
         let resFacGrammar = ""
         let resFirstGrammar = ""
+        let resLeftRecursion  = ""
+        let resPredictionSet = ""
 
         for (const property in grammar) {
 
@@ -42,8 +44,8 @@ const getGrammar = (req, res) => {
             resFacGrammar = resFacGrammar + mapToString(factorMap, noTerminal)
 
             // leftRecursion
-            const recursionGrammar = recursion.recursion(factorMap);
-            console.log(recursionGrammar);
+            const recursionGrammar = leftRecursion.LeftRecursion(factorMap);
+            resLeftRecursion = resLeftRecursion + mapToString(recursionGrammar, noTerminal)
 
             // LL1
             // PRIM
@@ -62,17 +64,20 @@ const getGrammar = (req, res) => {
 
             //     }
             // }
+
             //CONJUNTO PREDICCION
-            const conjuntoPrediccion = conjunto.conjunto(recursionGrammar,resFirstMap);
+            resProductionSetMap = productionSet.productionSet(recursionGrammar,resFirstMap);
+            resPredictionSet = resPredictionSet + mapToString(resProductionSetMap, noTerminal)
         }
 
         // Res
         res.send("GRAMMAR: <br/>" + resGrammar +
             "<br/> <br/> FactorGrammar <br/><br/>"   + resFacGrammar +
-            "<br/> LeftRecursion: <br/><br/>" +
+            "<br/> LeftRecursion: <br/><br/>" + resLeftRecursion +
             "<br/> LL1: " + 
             "<br/> <br/> PRIM: <br/><br/>" + resFirstGrammar +
-            "<br/> <br/> SIG: <br/><br/>")
+            "<br/> <br/> SIG: <br/><br/>" +
+            "<br/> <br/> CP: <br/><br/>" + resPredictionSet)
 
     } catch (e) {
         httpError(res, e)

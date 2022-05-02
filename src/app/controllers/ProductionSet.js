@@ -1,5 +1,5 @@
 module.exports = {
-    conjunto: (recursionGrammar,resFirstMap) =>{
+    productionSet: (recursionGrammar,resFirstMap) =>{
         const conjuntoMap = new Map();
         return conjuntoGrammarFun (recursionGrammar,resFirstMap,conjuntoMap);
     }
