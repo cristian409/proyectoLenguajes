@@ -41,8 +41,8 @@ const getGrammar = (req, res) => {
             resFacGrammar = resFacGrammar + mapToString(factorMap, noTerminal)
 
             // leftRecursion
-            //const r = recursion.recursion(grammar);
-            //console.log(r.gramatica);
+            const recursionGrammar = recursion.recursion(factorMap);
+            console.log(recursionGrammar);
 
             // LL1
             // PRIM
