@@ -13,14 +13,9 @@ function firstGrammarFunc(productionsMap, firstMap) {
     for (let [key, value] of productionsMap) {
 
         firstCharProd = value[0]
-        console.log("productions " + productionsMap)
-        console.log(key)
-        console.log(value)
-        console.log(firstCharProd)
         if (firstCharProd !== firstCharProd.toUpperCase()) { // Si el primer caracter de la producción está en mayuscula (no terminal)
 
             let primValue = ""
-            console.log(value)
             productions = value.split('|')
             let prim = ""
 
@@ -43,7 +38,6 @@ function firstGrammarFunc(productionsMap, firstMap) {
                         prim = prim + primValue
 
                     firstMap.set(key, "{" + prim + "}")
-                    console.log(firstMap)
                 }
             }
         }

@@ -2,6 +2,7 @@ const { response } = require('express');
 const fs = require('fs');
 const path = require('path');
 const factorGrammar = require("./FactorGrammar")
+const recursion = require("./recursion")
 const firstGrammar = require("./FirstGrammar")
 const { httpError } = require('../helpers/handleError')
 
@@ -40,6 +41,8 @@ const getGrammar = (req, res) => {
             resFacGrammar = resFacGrammar + mapToString(factorMap, noTerminal)
 
             // leftRecursion
+            //const r = recursion.recursion(grammar);
+            //console.log(r.gramatica);
 
             // LL1
             // PRIM
