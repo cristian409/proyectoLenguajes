@@ -32,8 +32,8 @@ function recursionGrammarFunc(produccionesMap, recursionMap) {
             listNoRecursion.forEach(elemento =>{
                 listaBeta.push(`${elemento}(${key}')`);
             });
-            for(let j=0;j<listaRecursion.length;j++){
-                if(j === listaRecursion.length -1){
+            for(let j=0;j<=listaRecursion.length;j++){
+                if(j == listaRecursion.length){
                     listaAlfa.push("λ");
                 }else {
                     listaAlfa.push(`${listaSobrante[j]}(${key}')`);

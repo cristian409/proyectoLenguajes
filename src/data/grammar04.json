@@ -1,6 +1,15 @@
 {
-    "gramatica":[
-        {"noTerminal":"CN", "productions":["CNoxFN","FN"]},
-        {"noTerminal":"FN", "productions":["tt"]}
-    ]
+    "grammar": {
+        "Initial": "CN",
+        "productions": [
+            {
+                "id": "CN",
+                "production": "CNoxFN|FN"
+            },
+            {
+                "id": "FN",
+                "production": "tt"
+            }
+        ]
+    }
 }

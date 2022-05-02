@@ -1,6 +1,5 @@
 {
     "grammar": {
-        "noTerminal": "A",
         "Initial": "Z",
         "productions": [
             {

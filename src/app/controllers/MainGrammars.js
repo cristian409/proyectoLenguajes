@@ -10,7 +10,7 @@ const { httpError } = require('../helpers/handleError')
 const getGrammar = (req, res) => {
 
     try {
-        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar02.json'))
+        const data = fs.readFileSync(path.join(__dirname, '..\\..\\data\\grammar04.json'))
         const grammar = JSON.parse(data).grammar.productions
         let resGrammar = ""
         let resFacGrammar = ""
@@ -44,12 +44,13 @@ const getGrammar = (req, res) => {
             resFacGrammar = resFacGrammar + mapToString(factorMap, noTerminal)
 
             // leftRecursion
+            console.log(factorMap)
             const recursionGrammar = leftRecursion.LeftRecursion(factorMap);
             resLeftRecursion = resLeftRecursion + mapToString(recursionGrammar, noTerminal)
 
             // LL1
             // PRIM
-            resFirstMap = firstGrammar.firstGrammar(factorMap)
+            resFirstMap = firstGrammar.firstGrammar(recursionGrammar)
             resFirstGrammar = resFirstGrammar + mapToString(resFirstMap, noTerminal)
 
             // SIG
