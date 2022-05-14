@@ -5,6 +5,7 @@ const factorGrammar = require("./FactorGrammar")
 const leftRecursion = require("./LeftRecursion")
 const firstGrammar = require("./FirstGrammar")
 const productionSet = require("./ProductionSet")
+const followingGrammar=require("./FollowingGrammar")
 const { httpError } = require('../helpers/handleError')
 
 const getGrammar = (req, res) => {
@@ -54,17 +55,12 @@ const getGrammar = (req, res) => {
             resFirstGrammar = resFirstGrammar + mapToString(resFirstMap, noTerminal)
 
             // SIG
-            //juanes work creacion de variables constantes
-            const solucionSiguientes = "";
-            const primerosSig = "";
-            const noTerminalPrimero = "";
+            //llamado funcion siguientes.
+            resfollowGrammar=followingGrammar.siguientes(recursionGrammar)
+
 
             // inicio el metodo de obtencion de los siguientes
-            // beginSig:(primerosSig, grammar)=>{
-            //     for(int i=0;j<grammar.size();i++){
-
-            //     }
-            // }
+            
 
             //CONJUNTO PREDICCION
             resProductionSetMap = productionSet.productionSet(recursionGrammar,resFirstMap);
