@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const path = require('path');
+<<<<<<< HEAD
 const { dbConnect } = require('./config/mongo');
 const helpers = require('./app/helpers/helpers');
 const bodyParser = require('body-parser');
@@ -12,6 +13,9 @@ const jsonParser = bodyParser.json();
 const urlEncodedParser = bodyParser.urlencoded({
   extended: true
 });
+=======
+const {dbConnect} = require('./config/mongo');
+>>>>>>> b688c4ddb35d69274da414c5d9143f2979048821
 
 // Settings
 app.set('port', process.env.PORT || 3000);
