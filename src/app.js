@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const path = require('path');
-const {dbConnect} = require('./config/mongo')
+const {dbConnect} = require('./config/mongo');
 
 // Settings
 app.set('port', process.env.PORT || 3000);

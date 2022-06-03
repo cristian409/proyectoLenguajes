@@ -7,15 +7,15 @@ module.exports = {
 }
 
 function recursionGrammarFunc(produccionesMap, recursionMap) {
-    let caracterPrimario;
-    let cadenaSobrante;
-    let listaRecursion= [];
-    let listNoRecursion = [];
-    let listaSobrante = [];
-    let listaBeta = [];
-    let listaAlfa = [];
+    
     for(let [key, value] of produccionesMap){
-
+        let caracterPrimario;
+        let cadenaSobrante;
+        let listaRecursion= [];
+        let listNoRecursion = [];
+        let listaSobrante = [];
+        let listaBeta = [];
+        let listaAlfa = [];
         productions = value.split('|');
 
         for(let i=0; i<productions.length;i++){
