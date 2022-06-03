@@ -1,14 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %>
-    </title>
+    <%- include ('partials/header.html'); %>
 </head>
+
 <body>
-    <h1>Hola mundo</h1>
+    <%- include ('partials/navegation.html'); %>
+
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    <div class="col s12 l4">
+                        <h2 class="title"> <strong>Bienvenido</strong> </h2>
+                        <div class="content">
+                            <h5>Inserte la información de la Gramatica</h5>
+                        </div>
+                    </div>
+
+                    <div class="col s12 l8">
+                        <form method="POST" action="/index" class="card-panel" id="suggest-form">
+                            <div class="row">
+                                <div class="input-field col s4">
+                                    <i class="material-icons prefix">grade</i>
+                                    <input id="initial" name="initial" type="text" class="validate">
+                                    <input id="grammarJson" name="grammarJson" type="hidden">
+                                    <label for="initial">Ecriba el no terminal inicial</label>
+                                </div>
+                            </div>
+                            <div id="rowProduction" class="row rowProduction">
+                                <div class="input-field col s5">
+                                    <i class="material-icons prefix">mode_edit</i>
+                                    <input id="noTerminal" name="noTerminal" type="text" class="validate">
+                                    <label for="noTerminal">Ecriba no terminal de la gramatica</label>
+                                </div>
+                                <div class="input-field col s5">
+                                    <i class="material-icons prefix">trending_flat</i>
+                                    <input id="production" name="production" type="text" class="validate">
+                                    <label for="production">Ecriba la produccion del no terminal</label>
+                                </div>
+                                <div class="input-field col s2">
+                                    <a id="addProduction" class="btn-floating light-blue darken-4"><i
+                                            class="material-icons">add</i></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s8">
+                                    <% if(typeof validation !='undefined' ) {%>
+                                        <% validation.forEach( (v)=> {%>
+                                            <div class="red-text">
+                                                <strong> <%= v.msg %> </strong>
+                                            </div>
+                                        <% }); %>
+                                    <% } %>
+                                    <div class="tituloG">Gramatica</div>
+                                    <div id="contentGrammar">
+                                        <!-- Campo de la Gramatica -->
+                                    </div>
+                                </div>
+                                <div class="col s4 right-align">
+            
+                                    <button id="btnSumit" class="btn waves-effect waves-teal light-blue darken-4 btnSumit disabled"
+                                        type="submit">
+                                        Cargar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <table>
+                    <thead class="center-align">
+                      <tr>
+                          <th>Factorización</th>
+                          <th>Recursión Izquierda</th>
+                          <th>Primeros</th>
+                          <th>Siguientes</th>
+                          <th>Conjunto Predicción</th>
+                      </tr>
+                    </thead>
+            
+                    <tbody>
+                      <tr>
+                        <td class="factor">
+                            <% if(typeof gFactor =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gFactor !='undefined' ) {%>
+                                <% gFactor.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
+                        <td class="recursionLeft">
+                            <% if(typeof gFirtMap =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gLeftRecursion !='undefined' ) {%>
+                                <% gLeftRecursion.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
+                        <td class="first">
+                            <% if(typeof gFirtMap =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gFirtMap !='undefined' ) {%>
+                                <% gFirtMap.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
+                        <td>$0.87</td>
+                        <td>$0.87</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+
 </body>
+
 </html>

@@ -1,0 +1,48 @@
+.icon {
+    position: relative;
+    padding-top: 13px;
+    margin-right: 5px;
+    left: 24vw;
+}
+
+.section {
+    padding-top: 5vh;
+}
+
+.titulo {
+    margin-bottom: 4vh;
+}
+
+.btnSumit:hover {
+    background-color: #039be5 !important;
+}
+
+.alert .card-content .material-icons {
+    font-size: 1.5em;
+    position: relative;
+    top: 5px;
+    margin-right: 0.5em;
+}
+
+.alert .card-content span {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-right: 4px;
+}
+
+.tituloG {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+#contentGrammar,
+.factor,
+.recursionLeft,
+.first {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.validacion {
+    color:  red;
+}

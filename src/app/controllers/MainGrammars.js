@@ -1,11 +1,9 @@
-const { response } = require('express');
 const fs = require('fs');
 const path = require('path');
 const factorGrammar = require("./FactorGrammar")
 const leftRecursion = require("./LeftRecursion")
 const firstGrammar = require("./FirstGrammar")
 const productionSet = require("./ProductionSet")
-const { httpError } = require('../helpers/handleError')
 
 const getGrammar = (req, res) => {
 
@@ -15,7 +13,7 @@ const getGrammar = (req, res) => {
         let resGrammar = ""
         let resFacGrammar = ""
         let resFirstGrammar = ""
-        let resLeftRecursion  = ""
+        let resLeftRecursion = ""
         let resPredictionSet = ""
 
         for (const property in grammar) {
@@ -30,14 +28,14 @@ const getGrammar = (req, res) => {
             let factorMap = new Map()
             resFacGrammarMap = factorGrammar.factorGrammar("", productions, factorMap, noTerminal)
 
-           
-            if (!(resFacGrammarMap instanceof Map)){
-                if(!(resFacGrammarMap instanceof Array)){
+
+            if (!(resFacGrammarMap instanceof Map)) {
+                if (!(resFacGrammarMap instanceof Array)) {
                     factorMap.set(noTerminal, resFacGrammarMap)
                 } else {
                     factorMap.set(noTerminal, resFacGrammarMap.join())
                 }
-                
+
             } else {
                 factorMap = resFacGrammarMap
             }
@@ -67,21 +65,21 @@ const getGrammar = (req, res) => {
             // }
 
             //CONJUNTO PREDICCION
-            resProductionSetMap = productionSet.productionSet(recursionGrammar,resFirstMap);
+            resProductionSetMap = productionSet.productionSet(recursionGrammar, resFirstMap);
             resPredictionSet = resPredictionSet + mapToString(resProductionSetMap, noTerminal)
         }
 
         // Res
         res.send("GRAMMAR: <br/>" + resGrammar +
-            "<br/> <br/> FactorGrammar <br/><br/>"   + resFacGrammar +
+            "<br/> <br/> FactorGrammar <br/><br/>" + resFacGrammar +
             "<br/> LeftRecursion: <br/><br/>" + resLeftRecursion +
-            "<br/> LL1: " + 
+            "<br/> LL1: " +
             "<br/> <br/> PRIM: <br/><br/>" + resFirstGrammar +
             "<br/> <br/> SIG: <br/><br/>" +
             "<br/> <br/> CP: <br/><br/>" + resPredictionSet)
 
     } catch (e) {
-        httpError(res, e)
+        // httpError(res, e)
     }
 }
 
@@ -90,7 +88,7 @@ organizandolo alfabeticamente pero iniciando por la produccion inicial*/
 function mapToString(map, noTerminal) {
 
     let stringMap = ""
-    
+
     map = new Map([...map.entries()].sort())
 
     for (let [key, value] of map.entries()) {
@@ -103,5 +101,6 @@ function mapToString(map, noTerminal) {
     }
     return stringMap
 }
+
 
 module.exports = { getGrammar }

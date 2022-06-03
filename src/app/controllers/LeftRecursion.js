@@ -7,15 +7,15 @@ module.exports = {
 }
 
 function recursionGrammarFunc(produccionesMap, recursionMap) {
-    let caracterPrimario;
-    let cadenaSobrante;
-    let listaRecursion= [];
-    let listNoRecursion = [];
-    let listaSobrante = [];
-    let listaBeta = [];
-    let listaAlfa = [];
     for(let [key, value] of produccionesMap){
-
+        let caracterPrimario;
+        let cadenaSobrante;
+        let listaRecursion= [];
+        let listNoRecursion = [];
+        let listaSobrante = [];
+        let listaBeta = [];
+        let listaAlfa = [];
+        
         productions = value.split('|');
 
         for(let i=0; i<productions.length;i++){
@@ -30,18 +30,18 @@ function recursionGrammarFunc(produccionesMap, recursionMap) {
         }
         if(listaRecursion.length > 0){
             listNoRecursion.forEach(elemento =>{
-                listaBeta.push(`${elemento}(${key}')`);
+                listaBeta.push(`${elemento}${key}'`);
             });
             for(let j=0;j<=listaRecursion.length;j++){
                 if(j == listaRecursion.length){
                     listaAlfa.push("λ");
                 }else {
-                    listaAlfa.push(`${listaSobrante[j]}(${key}')`);
+                    listaAlfa.push(`${listaSobrante[j]}${key}'`);
                 }
             }
             let produccionAlfa = listaAlfa.join("|");
             let produccionBeta = listaBeta.join("|");
-            let noTerminalPrimo = `(${key}')`
+            let noTerminalPrimo = `${key}'`
             recursionMap.set(key, produccionBeta);
             recursionMap.set(noTerminalPrimo, produccionAlfa);
         }else{
