@@ -1,3 +1,5 @@
+const { Console } = require("console");
+
 module.exports = {
   followingGrammar: (productionsMap, primMap, inicial) => {
     let followMap = new Map();
@@ -7,53 +9,100 @@ module.exports = {
 };
 
 function followingGrammarFunc(productionsMap, followMap, primMap, inicial) {
-  let siguientes = [];
   let testMap = new Map();
-  let key = "";
-  // iterando sobre las claves (verduras)
-  for (let noTerminal of productionsMap.keys()) { 
+  for (let noTerminal of productionsMap.keys()) {
     let arrayProductions = [];
     for (let produccion of productionsMap.values()) {
       productions = produccion.split("|");
       for (let i = 0; i < productions.length; i++) {
         if (productions[i].includes(noTerminal)) {
-          arrayProductions.push(productions[i]);
-         
+          let posicion = productions[i].indexOf(noTerminal, 0);
+
+          let longitud = noTerminal.length;
+
+          if (posicion != -1) {
+            posicion += longitud;
+            if (productions[i][posicion] !== "'") {
+              arrayProductions.push(productions[i]);
+            }
+          }
         }
       }
-    }testMap.set(noTerminal, arrayProductions);
+    }
+    testMap.set(noTerminal, arrayProductions);
   }
-  console.log(testMap);
+  for (let [key, value] of testMap) {
+    let siguienteTerminal = [];
 
-  // for (let [key,value] of productionsMap) {
+    if (key == inicial) {
+      siguienteTerminal.push("$");
+    }
+    if (value != null) {
+      for (let k = 0; k < value.length; k++) {
+        let posicion = value[k].indexOf(key, 0);
+        let longitud = key.length;
+        posicion += longitud;
+        if (value[k][posicion] == "'") {
+          continue;
+        }
+        if (value[k][posicion] !== undefined) {
+          let mayusc = value[k][posicion];
 
-  //     productions = value.split('|')
-  //     if (key==inicial) {
-  //         siguientes.push("{$}")
-  //     }
-  //     for (let i = 0; i < productions.length; i++) {
+          if (value[k][posicion] == mayusc.toUpperCase()) {
+            for (let keyIni of productionsMap.keys()) {
+              let varString = "";
+              for (let j = 0; j < keyIni.length; j++) {
+                if (value[k][posicion + j] == keyIni[j]) {
+                  varString += keyIni[j];
+                }
+              }
 
-  //         let posicion=productions[i].indexOf(key,0)
-  //         let longitud=key.length
-  //         let siguienteTerminal="";
-  //         if (posicion!=-1) {
-  //             posicion+=longitud-1
-  //             if (productions[posicion+1]=="'") {
-  //                 continue
-  //             }
-  //             if (productions[posicion+1]==productions[posicion+1].toUpperCase()) {
+              for (let [keyprim, valueprim] of primMap) {
+                if (varString == keyprim) {
+                  for (let h = 0; h < valueprim.length; h++) {
+                    if (!siguienteTerminal.includes(valueprim[h])) {
+                      siguienteTerminal.push(valueprim[h]);
+                    }
+                  }
+                }
+              }
+            }
+          }
+          if (value[k][posicion] == mayusc.toLowerCase()) {
+            siguienteTerminal.push(value[k][posicion]);
+          } else {
+            let simbolos = "()*+-_.:;%&/#=<>?¡¿!^";
+            if (value[k][posicion].includes(simbolos)) {
+              siguienteTerminal.push(value[k][posicion]);
+            }
+          }
+        }
 
-  //             }
-  //             if(productions[posicion+1]==null||productions[posicion+1]==λ){
+        if (value[k][posicion] == undefined || value[k][posicion] == "λ") {
+          let llave = "";
+          for (let [keyIni, valueIni] of productionsMap) {
+            let productIni = valueIni.split("|");
 
-  //                 if (siguienteTerminal==null) {
-  //                     siguienteTerminal+=siguientes[i];
-  //                 }
+            for (let r = 0; r < productIni.length; r++) {
+              if (productIni[r] == value[k]) {
+                llave = keyIni;
+              }
+            }
+          }
 
-  //             }
-  //         }
-
-  //     }
-
-  // }
+          for (let [keyFin, valueFin] of followMap) {
+            if (keyFin == llave) {
+              for (let u = 0; u < valueFin.length; u++) {
+                if (!siguienteTerminal.includes(valueFin[u])) {
+                  siguienteTerminal.push(valueFin[u]);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    followMap.set(key, siguienteTerminal);
+  }
+  return followMap;
 }

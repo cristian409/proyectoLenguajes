@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const helpers = require('../helpers/helpers')
-const factorGrammar = require("../controllers/FactorGrammar")
-const leftRecursion = require("../controllers/LeftRecursion");
-const firstGrammar = require("../controllers/FirstGrammar");
-
+const factorGrammar = require("../controllers/LL1/FactorGrammar");
+const leftRecursion = require("../controllers/LL1/LeftRecursion");
+const firstGrammar = require("../controllers/LL1/FirstGrammar");
+const following = require("../controllers/LL1/following");
 const { body, validationResult } = require('express-validator');
 
 router.get('/', (req, res) => {
@@ -32,7 +32,7 @@ router.post("/index",
 
             const recursionGrammar = leftRecursion.LeftRecursion(factorMap);//Recursion izquierda
             const resFirstMap = firstGrammar.firstGrammar(recursionGrammar);//Primeros 
-
+            const resfollowMap = following.followingGrammar(recursionGrammar,resFirstMap,initial);//siguientes 
             const gFactor = helpers.grammarJson(factorMapFac);//Se pasa el objeto mapa de la factorizacion
             const gLeftRecursion = helpers.grammarJson(recursionGrammar); //Se pasa el objeto mapa de la recursion y se convierte en json 
             const gFirtMap = helpers.grammarJson(resFirstMap);//Se pasa el objeto mapa de los primero y se convierte en json 
