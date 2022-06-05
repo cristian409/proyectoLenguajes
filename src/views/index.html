@@ -86,11 +86,11 @@
                     <tbody>
                       <tr>
                         <td class="factor">
-                            <% if(typeof gFactor =='undefined' ) {%>
+                            <% if(typeof gFactorGrammar =='undefined' ) {%>
                                 <div>No hay datos</div>
                             <% } %>
-                            <% if(typeof gFactor !='undefined' ) {%>
-                                <% gFactor.forEach( (g) => {%>
+                            <% if(typeof gFactorGrammar !='undefined' ) {%>
+                                <% gFactorGrammar.forEach( (g) => {%>
                                     <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
                                 <% }); %>
                             <% } %>
@@ -111,12 +111,30 @@
                             <% } %>
                             <% if(typeof gFirtMap !='undefined' ) {%>
                                 <% gFirtMap.forEach( (g) => {%>
-                                    <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
+                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
                                 <% }); %>
                             <% } %>
                         </td>
-                        <td>$0.87</td>
-                        <td>$0.87</td>
+                        <td class="follow">
+                            <% if(typeof gFollow =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gFollow !='undefined' ) {%>
+                                <% gFollow.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
+                        <td class="conjunto">
+                            <% if(typeof gConjunto =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gConjunto !='undefined' ) {%>
+                                <% gConjunto.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
                       </tr>
                     </tbody>
 
@@ -132,10 +150,10 @@
             </div>
         </div>
 
-        <% if(typeof LR0Map == 'undefined' ) {%>
+        <% if(typeof resLR0 == 'undefined' ) {%>
             <div>No hay datos</div>
         <% } else { %>
-            <%- LR0Map %>
+            <%- resLR0 %>
         <% } %>
 
 </body>

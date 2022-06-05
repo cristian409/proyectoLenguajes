@@ -67,7 +67,9 @@
 #contentGrammar,
 .factor,
 .recursionLeft,
-.first {
+.first,
+.follow,
+.conjunto {
     font-size: 18px;
     font-weight: 500;
 }
