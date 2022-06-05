@@ -86,11 +86,11 @@
                     <tbody>
                       <tr>
                         <td class="factor">
-                            <% if(typeof gFactor =='undefined' ) {%>
+                            <% if(typeof gFactorGrammar =='undefined' ) {%>
                                 <div>No hay datos</div>
                             <% } %>
-                            <% if(typeof gFactor !='undefined' ) {%>
-                                <% gFactor.forEach( (g) => {%>
+                            <% if(typeof gFactorGrammar !='undefined' ) {%>
+                                <% gFactorGrammar.forEach( (g) => {%>
                                     <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
                                 <% }); %>
                             <% } %>
@@ -111,7 +111,7 @@
                             <% } %>
                             <% if(typeof gFirtMap !='undefined' ) {%>
                                 <% gFirtMap.forEach( (g) => {%>
-                                    <div><span><%= g.noTerminal %></span> --> <span><%= g.productions %></span></div>
+                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
                                 <% }); %>
                             <% } %>
                         </td>

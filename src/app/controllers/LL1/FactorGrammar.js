@@ -1,7 +1,29 @@
 module.exports = {
-    factorGrammar: (alreadyFac, productions, factorMap, factorFather) => {
-        return factorGrammarFunc(alreadyFac, productions, factorMap, factorFather)
+    factorGrammar: (map) => {
+        return factorGrammarF(map)
+        // return factorGrammarFunc(alreadyFac, productions, factorMap, factorFather)
     }
+}
+
+function factorGrammarF(map) {
+    let factorMap = new Map();
+    for (let [key, value] of map) {
+        productions = value.split("|");
+        resFacGrammarMap = factorGrammarFunc(
+            "",
+            productions,
+            factorMap,
+            key
+        );
+        if (!(resFacGrammarMap instanceof Map)) {
+            if (!(resFacGrammarMap instanceof Array)) {
+                factorMap.set(key, resFacGrammarMap);
+            } else {
+                factorMap.set(key, resFacGrammarMap.join());
+            }
+        }
+    }
+    return factorMap;
 }
 
 // AlreadyFac: String de las producciones ya factorizadas
