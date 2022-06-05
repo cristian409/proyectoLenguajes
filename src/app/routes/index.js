@@ -1,17 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const helpers = require('../helpers/helpers')
-<<<<<<< HEAD
-const factorGrammar = require("../controllers/LL1/FactorGrammar")
-const leftRecursion = require("../controllers/LL1/LeftRecursion");
-const firstGrammar = require("../controllers/LL1/FirstGrammar");
-
-=======
 const factorGrammar = require("../controllers/LL1/FactorGrammar");
 const leftRecursion = require("../controllers/LL1/LeftRecursion");
 const firstGrammar = require("../controllers/LL1/FirstGrammar");
 const following = require("../controllers/LL1/following");
->>>>>>> 6ddd57f84f94ba1239cf3d62ef8fa27ddc27d205
+const productionsSet = require("../controllers/LL1/ProductionSet");
 const { body, validationResult } = require('express-validator');
 
 router.get('/', (req, res) => {
@@ -38,17 +32,16 @@ router.post("/index",
             const factoring = factorGrammar.factorGrammar(factorMap);//Factorizacion
             const recursionGrammar = leftRecursion.LeftRecursion(factorMap);//Recursion izquierda
             const resFirstMap = firstGrammar.firstGrammar(recursionGrammar);//Primeros 
-<<<<<<< HEAD
+            const resfollowMap = following.followingGrammar(recursionGrammar,resFirstMap,initial);//siguientes
+            const conjuntoGrammar = productionsSet.productionSet(recursionGrammar, resFirstMap, resfollowMap);//conjunto prediccion
 
             const gFactorGrammar = helpers.grammarJson(factoring);//Se pasa el obejto mapa de la factorizacion y se convierte en json
-=======
-            const resfollowMap = following.followingGrammar(recursionGrammar,resFirstMap,initial);//siguientes 
-            const gFactor = helpers.grammarJson(factorMapFac);//Se pasa el objeto mapa de la factorizacion
->>>>>>> 6ddd57f84f94ba1239cf3d62ef8fa27ddc27d205
             const gLeftRecursion = helpers.grammarJson(recursionGrammar); //Se pasa el objeto mapa de la recursion y se convierte en json 
-            const gFirtMap = helpers.grammarJson(resFirstMap);//Se pasa el objeto mapa de los primero y se convierte en json 
+            const gFirtMap = helpers.grammarJson(resFirstMap);//Se pasa el objeto mapa de los primero y se convierte en json
+            const gFollow = helpers.grammarJson(resfollowMap);//Se pasa el objeto mapa de los siguientes y se convierte en json
+            const gConjunto = helpers.grammarJson(conjuntoGrammar);//Se pasa el objeto mapa de los conjunto prediccion y se convierte en json
 
-            res.render('index.html', {gFactorGrammar,gLeftRecursion,gFirtMap});//Se rederiza el index con la informacion del proyecto
+            res.render('index.html', {gFactorGrammar,gLeftRecursion,gFirtMap,gFollow,gConjunto});//Se rederiza el index con la informacion del proyecto
         }
     });
 

@@ -1,9 +1,6 @@
-const { Console } = require("console");
-
 module.exports = {
   followingGrammar: (productionsMap, primMap, inicial) => {
     let followMap = new Map();
-
     return followingGrammarFunc(productionsMap, followMap, primMap, inicial);
   },
 };
@@ -16,28 +13,19 @@ function followingGrammarFunc(productionsMap, followMap, primMap, inicial) {
       productions = produccion.split("|");
       for (let i = 0; i < productions.length; i++) {
         if (productions[i].includes(noTerminal)) {
-<<<<<<< HEAD
-          arrayProductions.push(productions[i]);
-=======
           let posicion = productions[i].indexOf(noTerminal, 0);
-
           let longitud = noTerminal.length;
-
           if (posicion != -1) {
             posicion += longitud;
             if (productions[i][posicion] !== "'") {
               arrayProductions.push(productions[i]);
             }
           }
->>>>>>> 6ddd57f84f94ba1239cf3d62ef8fa27ddc27d205
         }
       }
     }
     testMap.set(noTerminal, arrayProductions);
   }
-<<<<<<< HEAD
-  console.log(testMap);
-=======
   for (let [key, value] of testMap) {
     let siguienteTerminal = [];
 
@@ -112,5 +100,4 @@ function followingGrammarFunc(productionsMap, followMap, primMap, inicial) {
     followMap.set(key, siguienteTerminal);
   }
   return followMap;
->>>>>>> 6ddd57f84f94ba1239cf3d62ef8fa27ddc27d205
 }

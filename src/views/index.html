@@ -115,8 +115,26 @@
                                 <% }); %>
                             <% } %>
                         </td>
-                        <td>$0.87</td>
-                        <td>$0.87</td>
+                        <td class="follow">
+                            <% if(typeof gFollow =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gFollow !='undefined' ) {%>
+                                <% gFollow.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
+                        <td class="conjunto">
+                            <% if(typeof gConjunto =='undefined' ) {%>
+                                <div>No hay datos</div>
+                            <% } %>
+                            <% if(typeof gConjunto !='undefined' ) {%>
+                                <% gConjunto.forEach( (g) => {%>
+                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
+                                <% }); %>
+                            <% } %>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
