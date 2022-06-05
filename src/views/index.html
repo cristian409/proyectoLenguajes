@@ -131,7 +131,7 @@
                             <% } %>
                             <% if(typeof gConjunto !='undefined' ) {%>
                                 <% gConjunto.forEach( (g) => {%>
-                                    <div><span><%= g.noTerminal %></span> --> <span>{ <%= g.productions %> }</span></div>
+                                    <div><span>( <%= g.noTerminal %> )</span> --> <span>{ <%= g.productions %> }</span></div>
                                 <% }); %>
                             <% } %>
                         </td>
