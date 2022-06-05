@@ -35,6 +35,35 @@
     font-weight: 900;
 }
 
+.item {
+    margin: 1em;
+    padding: 1em;
+    float: left;
+    font-size: 18px;
+    font-weight: 500;
+    width: 191px;
+    height: 310px;
+    border-style: solid;
+    border-color: black;
+    background-color: #b3e5fc;
+}
+
+.reduceText{
+    display: inline;
+    color: tomato;
+}
+
+.item2{
+    text-align: center;
+    border-style: solid;
+    border-color: black;
+    background-color: aliceblue;
+}
+
+.container {
+    overflow: hidden;
+}
+
 #contentGrammar,
 .factor,
 .recursionLeft,
@@ -44,5 +73,5 @@
 }
 
 .validacion {
-    color:  red;
+    color: red;
 }

@@ -37,37 +37,40 @@ function mapToString(map, noTerminal) {
 /*Formatea el mapa de las producciones en un string 
 organizandolo alfabeticamente pero iniciando por la produccion inicial*/
 function enumMapToString(map) {
-    let stringMap = ""
+    let stringMap = "<div class='container'>"
 
     for (let [step, productions] of map.entries()) {
 
+        stringMap += "<div class='item'>"
+
         if (productions.has(999)) {
-            stringMap += "<br/>-- " + productions.get(999).get(("(T)")) + " -> <br/>"
+            stringMap += "<div class='item2'> -- " + productions.get(999).get(("(T)")) + " -> </div>"
+        } else {
+            stringMap += "<div class='item2'> -------> </div>"
         }
 
-        stringMap += "<br/>" + step + "<br/>"
-
-        for (let [enumerator, grammarMap] of productions.entries()) {
-
-            for (let [key, value] of grammarMap.entries()) {
-
-                switch (key) {
-                    case "R":
-                        stringMap += " (R" + value + ")"
-                        break
-                    case "(T)":
-                        break
-                    default:
-                        stringMap += enumerator + ". " + key + "' -> " + value
-                        break
+        stringMap += " <div class='item2'> [" + step + "] </div> <br/>"
+        for (let [enumerator, listGrammarsMaps] of productions.entries()) {
+            for (let i = 0; i < listGrammarsMaps.length; i++) {
+                for (let [key, value] of listGrammarsMaps[i].entries()) {
+                    switch (key) {
+                        case "R":
+                            stringMap += "<p class='reduceText'> (R" + value + ") </p>"
+                            break
+                        case "(T)":
+                            break
+                        default:
+                            stringMap += enumerator + ". " + key + " -> " + value
+                            break
+                    }
                 }
+                stringMap += "<br/>"
             }
-
-            stringMap += "<br/>"
         }
+        stringMap += "</div>"
     }
 
-    return stringMap
+    return stringMap + "</div>"
 }
 
 

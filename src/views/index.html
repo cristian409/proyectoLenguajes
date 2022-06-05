@@ -119,9 +119,24 @@
                         <td>$0.87</td>
                       </tr>
                     </tbody>
+
+                    <thead class="center-align">
+                        <tr>
+                            <th>LR0</th>
+                        </tr>
+                    </thead>
+
+                    <div id="LR0"></div>
+                    
                   </table>
             </div>
         </div>
+
+        <% if(typeof LR0Map == 'undefined' ) {%>
+            <div>No hay datos</div>
+        <% } else { %>
+            <%- LR0Map %>
+        <% } %>
 
 </body>
 

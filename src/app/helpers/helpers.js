@@ -9,6 +9,7 @@ exports.grammarMap = (grammarJson) => {
     for (const g in grammar) {
         factorMap.set(grammar[g].noTerminal, grammar[g].production);
     }
+    
     return factorMap;
 }
 /**
