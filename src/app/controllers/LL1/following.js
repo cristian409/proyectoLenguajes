@@ -40,7 +40,7 @@ function followingGrammarFunc(productionsMap, followMap, primMap, inicial) {
         if (value[k][posicion] == "'") {
           continue;
         }
-        if (value[k][posicion] !== undefined) {
+        if (value[k][posicion] != undefined) {
           let mayusc = value[k][posicion];
 
           if (value[k][posicion] == mayusc.toUpperCase()) {
@@ -53,10 +53,14 @@ function followingGrammarFunc(productionsMap, followMap, primMap, inicial) {
               }
 
               for (let [keyprim, valueprim] of primMap) {
-                if (varString == keyprim) {
-                  for (let h = 0; h < valueprim.length; h++) {
-                    if (!siguienteTerminal.includes(valueprim[h])) {
-                      siguienteTerminal.push(valueprim[h]);
+                if (valueprim !== undefined) {
+                  
+
+                  if (varString == keyprim) {
+                    for (let h = 0; h < valueprim.length; h++) {
+                      if (!siguienteTerminal.includes(valueprim[h])) {
+                        siguienteTerminal.push(valueprim[h]);
+                      }
                     }
                   }
                 }

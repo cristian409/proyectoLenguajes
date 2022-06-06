@@ -8,6 +8,7 @@ const following = require("../controllers/LL1/following");
 const productionsSet = require("../controllers/LL1/ProductionSet");
 const LR0 = require("../controllers/LR0/LR0");
 const { body, validationResult } = require('express-validator');
+const { tablaLL1 } = require('../controllers/LR0/tablaLL0');
 
 router.get('/', (req, res) => {
     res.render('index.html');
@@ -41,8 +42,8 @@ router.post("/index",
             const gFirtMap = helpers.grammarJson(resFirstMap);//Se pasa el objeto mapa de los primero y se convierte en json
             const gFollow = helpers.grammarJson(resfollowMap);//Se pasa el objeto mapa de los siguientes y se convierte en json
             const gConjunto = helpers.grammarJson(conjuntoGrammar);//Se pasa el objeto mapa de los conjunto prediccion y se convierte en json
-            const resLR0 = LR0.lr0(factorMap, initial)
-
+            const resLR0 = LR0.lr0(factorMap, initial);
+            //const tablaLL10= tablaLL0(factorMap,resfollowMap,initial);
             res.render('index.html', { gFactorGrammar, gLeftRecursion, gFirtMap, gFollow, gConjunto, resLR0});//Se rederiza el index con la informacion del proyecto
         }
     });

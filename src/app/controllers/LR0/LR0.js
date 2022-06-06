@@ -53,9 +53,12 @@ function enumNotSplitProduction(production, noTerminal, enumerator, grammarMapEn
     const tempMap = new Map()
     tempMap.set(noTerminal, production)
     const tempArray = grammarMapEnum.get(enumerator)
+    if (tempArray!==undefined) {
     tempArray.push(tempArray)
     grammarMapEnum.set(enumerator, tempArray)
     return enumerator++
+    }
+   
 }
 
 function addPeriodToALLGrammar(listGrammarMap, noTerminal, production) {
